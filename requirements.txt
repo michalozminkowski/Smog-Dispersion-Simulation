@@ -1,0 +1,11 @@
+numpy
+matplotlib
+osmnx
+pandas
+geopandas
+shapely
+scipy
+fastapi
+uvicorn
+requests
+pillow

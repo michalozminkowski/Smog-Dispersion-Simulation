@@ -1,0 +1,15 @@
+# Ukryte pliki środowiska PyCharm i Maca
+.idea/
+.DS_Store
+__pycache__/
+
+# Pliki wygenerowane przez aplikację (nie chcemy ich w kodzie źródłowym)
+*.gif
+smog_symulacja.gif
+
+# Środowisko wirtualne (jeśli jakiegoś używasz)
+venv/
+env/
+
+# KLUCZE API I SEKRETY! (Gdybyś kiedyś stworzył plik .env z hasłami)
+.env
