@@ -133,8 +133,6 @@ def main():
         ax.text(start_x, start_y - 20, 'WIND', fontsize=9, color='deepskyblue',
                 weight='bold', ha='center', va='center')
 
-        if info_text:
-            info_text.remove()
 
         bg_pm10 = config.TUESDAY_PROFILE[hour]
         vol_pct = int(config.HOURLY_TRAFFIC[hour] * 100)
@@ -154,8 +152,14 @@ def main():
             f"Max Concentration: {np.max(recorded_frames[frame_idx]):.1f} µg/m³"
         ]
 
+        try:
+            if info_text:
+                info_text.remove()
+        except Exception:
+            pass
+
         info_text = ax.text(
-            0.02, 0.98, '\n'.join(info_lines),
+            -0.8, 1.0, '\n'.join(info_lines),
             transform=ax.transAxes,
             fontsize=10, color='white',
             verticalalignment='top',
@@ -163,18 +167,20 @@ def main():
             bbox=dict(boxstyle='round', facecolor='#2c3e50', alpha=0.9, edgecolor='white')
         )
 
-        ax.set_title(
-            "Simulation: 30% GIOS Background + 70% (Congestion * Traffic Volume)",
-            fontsize=14, fontweight='bold', pad=20
-        )
+        ax.set_title("Smog Dispersion Simulation: 30% GIOS Background\n+ 70% (Congestion * Traffic)", fontsize=12,
+                     fontweight='bold')
 
         return [im, wind_arrow, info_text]
 
-    import gc
+    fig.set_size_inches(8.5, 6)
+
+    fig.subplots_adjust(left=0.38, right=0.88, top=0.85, bottom=0.1)
 
     ani = animation.FuncAnimation(fig, update, frames=config.STEPS_PER_DAY, interval=40, blit=False)
-    ani.save('smog_symulacja.gif', writer='pillow', fps=10)
+    ani.save('smog_symulacja.gif', writer='pillow', fps=10, dpi=70)
+
     plt.close('all')
+    import gc
     gc.collect()
 
 
