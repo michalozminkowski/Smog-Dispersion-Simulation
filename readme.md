@@ -2,12 +2,10 @@
 
 This project simulates air pollution dispersion in the Jeżyce district of Poznań. Instead of using random traffic generation, the simulation relies on real-world congestion data collected from the TomTom API and actual street geometry from OpenStreetMap.
 
----
 
 <p align="center">
-  <img src="path/to/your/animation.gif" alt="Smog Simulation Animation" width="700">
+  <img src="data/simreadme.gif" alt="Smog Simulation Animation" width="700">
 </p>
----
 
 ## Project Overview
 

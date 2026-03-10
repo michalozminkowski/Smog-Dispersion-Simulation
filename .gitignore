@@ -12,7 +12,6 @@ __pycache__/
 # 3. Wygenerowane pliki i dane lokalne
 Dane z sondy/
 *.gif
-!0204-2.gif
 smog_symulacja.gif
 
 # 4. Skrypty robocze (brudnopisy, których NIE chcemy na GitHubie)

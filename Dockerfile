@@ -10,6 +10,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
+ENV PYTHONPATH=/app/app
 ENV DOCKER_ENV=True
 
 EXPOSE 8000
