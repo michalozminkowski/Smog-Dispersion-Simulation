@@ -1,0 +1,27 @@
+name: Zbuduj i Wypchnij (CI/CD)
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Pobieranie kodu repozytorium
+        uses: actions/checkout@v3
+
+      - name: Logowanie do Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Budowanie i Push obrazu
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          push: true
+          tags: michalozm/smog-api:latest
