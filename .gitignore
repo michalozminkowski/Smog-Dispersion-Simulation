@@ -1,26 +1,21 @@
-# 1. Środowiska wirtualne
 venv/
 .venv/
 env/
 
-# 2. Cache i pliki tymczasowe
 cache/
 __pycache__/
 .idea/
 .DS_Store
 
-# 3. Wygenerowane pliki i dane lokalne
 Dane z sondy/
 *.gif
 !simreadme.gif
 smog_symulacja.gif
 
-# 4. Skrypty robocze (brudnopisy, których NIE chcemy na GitHubie)
 analiza_danych.py
 klikacz.py
 wykres_matematyki.py
 
-# 5. Robocze pliki CSV (zostawiamy tylko oryginalny SREDNIE_KORKI.csv)
 korki_jezyce_tabela.csv
 moje_punkty_tomtom.csv
 SREDNIE_KORKI_24H.csv
