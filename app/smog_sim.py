@@ -158,7 +158,7 @@ def main():
             transform=ax.transAxes,
             fontsize=10, color='white',
             verticalalignment='top',
-            horizontalalignment='right',
+            horizontalalignment='left',
             bbox=dict(boxstyle='round', facecolor='#2c3e50', alpha=0.9, edgecolor='white')
         )
 
@@ -168,7 +168,7 @@ def main():
         return [im, wind_arrow, info_text]
 
     ani = animation.FuncAnimation(fig, update, frames=len(recorded_frames), interval=40, blit=False)
-    ani.save('smog_symulacja.gif', writer='pillow', fps=10, dpi=80)
+    ani.save('smog_symulacja.gif', writer='pillow', fps=10, dpi=150)
 
     plt.close('all')
 
