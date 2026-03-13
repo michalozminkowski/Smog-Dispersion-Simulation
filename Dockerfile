@@ -5,13 +5,14 @@ WORKDIR /app
 RUN apt-get update && apt-get install -y libspatialindex-dev && rm -rf /var/lib/apt/lists/*
 
 COPY requirements.txt .
-
 RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
 ENV PYTHONPATH=/app/app
 ENV DOCKER_ENV=True
+
+RUN python -c "from app import smog_sim; smog_sim.main()"
 
 EXPOSE 8000
 

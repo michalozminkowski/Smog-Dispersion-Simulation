@@ -13,7 +13,6 @@ import matplotlib.patheffects as PathEffects
 from app import config, map_utils, physics
 from weather import WIND_DATA
 
-
 def main():
     # 1. POBIERANIE MAPY
     base_source, label_candidates, congestion_grid = map_utils.create_smog_map_with_congestion(
@@ -30,25 +29,20 @@ def main():
         day_name = 'Monday' if t < config.STEPS_PER_DAY else 'Tuesday'
         hour_idx = int((t * minutes_per_step) % (24 * 60) // 60) % 24
 
-        # Dane GIOS (Tło)
         if day_name == 'Monday':
             gios_pm10 = config.MONDAY_PROFILE[hour_idx]
         else:
             gios_pm10 = config.TUESDAY_PROFILE[hour_idx]
 
-        # Dane Korkowe
         current_congestion = congestion_grid[hour_idx, :, :] if congestion_grid is not None else np.ones(
             (config.GRID_SIZE, config.GRID_SIZE))
 
-        # Dane Wiatrowe
         forecast_idx = hour_idx // 3
         if forecast_idx >= len(WIND_DATA[day_name]): forecast_idx = len(WIND_DATA[day_name]) - 1
         wind_params = WIND_DATA[day_name][forecast_idx]
 
-        # Ilość aut w danej godzinie
         current_traffic_volume = config.HOURLY_TRAFFIC[hour_idx]
 
-        # Krok symulacji
         current_smog = physics.update_simulation_step(
             current_smog=current_smog,
             base_source=base_source,
@@ -60,16 +54,12 @@ def main():
             traffic_volume=current_traffic_volume
         )
 
-        # Nagrywanie wtorku
         if t >= config.STEPS_PER_DAY:
             recorded_frames.append(current_smog.copy())
             max_pollution = max(max_pollution, np.max(current_smog))
 
     fig, ax = plt.subplots(figsize=(18, 14))
     plt.subplots_adjust(left=0.22, right=0.98, top=0.94, bottom=0.06)
-
-    mng = plt.get_current_fig_manager()
-    mng.full_screen_toggle()
 
     im = ax.imshow(recorded_frames[0], cmap='inferno', vmin=0, vmax=max_pollution * 0.8, animated=True)
     ax.contour(base_source, levels=[0.5], colors='cyan', linewidths=0.4, alpha=0.3)
@@ -133,9 +123,7 @@ def main():
         ax.text(start_x, start_y - 20, 'WIND', fontsize=9, color='deepskyblue',
                 weight='bold', ha='center', va='center')
 
-
         bg_pm10 = config.TUESDAY_PROFILE[hour]
-        vol_pct = int(config.HOURLY_TRAFFIC[hour] * 100)
 
         info_lines = [
             "SMOG FORECAST",
@@ -159,7 +147,7 @@ def main():
             pass
 
         info_text = ax.text(
-            -0.8, 1.0, '\n'.join(info_lines),
+            -0.28, 1.0, '\n'.join(info_lines),
             transform=ax.transAxes,
             fontsize=10, color='white',
             verticalalignment='top',
@@ -172,17 +160,10 @@ def main():
 
         return [im, wind_arrow, info_text]
 
-    fig.set_size_inches(8.5, 6)
-
-    fig.subplots_adjust(left=0.38, right=0.88, top=0.85, bottom=0.1)
-
     ani = animation.FuncAnimation(fig, update, frames=config.STEPS_PER_DAY, interval=40, blit=False)
-    ani.save('smog_symulacja.gif', writer='pillow', fps=10, dpi=70)
+    ani.save('smog_symulacja.gif', writer='pillow', fps=15, dpi=120)
 
     plt.close('all')
-    import gc
-    gc.collect()
-
 
 if __name__ == "__main__":
     main()
