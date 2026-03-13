@@ -154,7 +154,7 @@ def main():
             pass
 
         info_text = ax.text(
-            -0.8, 1.0, '\n'.join(info_lines),
+            -0.6, 1.0, '\n'.join(info_lines),
             transform=ax.transAxes,
             fontsize=10, color='white',
             verticalalignment='top',
